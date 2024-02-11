@@ -1,25 +1,29 @@
 import express from "express";
+import morgan from "morgan";
+
+import globalRouter from "./routers/globalRouter";
+import videoRouter from "./routers/videoRouter";
+import userRouter from "./routers/userRouter";
 
 // express 를 실현하는 app 
 const app = express();
 const PORT = 4000;
 const handleListening = () => console.log(`✅ Server listenting on port http://localhost:${PORT} 🚀`);
 
+const logger = morgan("dev")
 
-const handleLogin = (req, res)=> {
-    return res.send("login here");
-};
 //express 앱 서버가 들을 수 있도록
 
-const logger = (req, res, next) =>{
-  console.log(`${req.method}, ${req.url}`);
-  next();
-}
+
 const handleHome = (req, res)=> {
-  console.log("how about this?")
   return res.send("hi miri");
 };
-app.get("/", logger, handleHome);
-app.get("/login", handleLogin);
+
+app.use(logger);
+app.use("/", globalRouter);
+app.use("/videos", videoRouter);
+app.use("/users", userRouter);
+
+
 app.listen(PORT, handleListening);
 
