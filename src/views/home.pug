@@ -4,12 +4,6 @@ include mixins/video
 block content
 
     main
-        nav 
-            ul
-                li 
-                    a(href="/videos/upload") Upload Video
-        h1 Home!
-        input(type="text" placeholder="What is your name!")
         ul
             each item in videos     
                 +video(item)
