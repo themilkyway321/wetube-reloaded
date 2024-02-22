@@ -9,12 +9,15 @@ const UserSchema = new mongoose.Schema({
     password:{type:String},
     name:{type:String, required:true},
     location:String,
+    videos:[{type:mongoose.Schema.Types.ObjectId, ref:"Video"}],
 });
 
 
 UserSchema.pre("save", async function(){
+    //패스워드가 변경될때만 hash해주기 
+    if(this.isModified("password")){
     this.password = await bcrypt.hash(this.password, 5);
-    console.log(this.password);
+    }
 })
 
 const User = mongoose.model("User", UserSchema);

@@ -1,9 +1,10 @@
 import multer from "multer";
 
 export const localsMiddleware = (req, res, next)=>{
-    console.log(req.session);
+    // console.log(req.session);
     res.locals.loggedIn = Boolean(req.session.loggedIn);
     res.locals.loggedInUser= req.session.user || {};
+    // console.log(res.locals.loggedInUser);
     res.locals.siteName = "Webtube"
     next();
     // res.locals.siteName = 
@@ -43,6 +44,6 @@ export const avatarUpload = multer({
   export const videoUpload = multer({
     dest: "uploads/videos/",
     limits: {
-      fileSize: 10000000,
+      fileSize: 100000000,
     },
   });
