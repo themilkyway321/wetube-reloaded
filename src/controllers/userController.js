@@ -3,11 +3,11 @@ import Video from "../models/Video";
 import bcrypt from "bcrypt";
 import fetch from "node-fetch";
 
-export const getJoin = (req, res) => {
-    
+export const getJoin = (req, res) => {    
     return res.render("join",{pageTitle:"Join"});
-
     }
+
+
 export const postJoin = async(req, res)=>{
     const { name, username, email, password, password2, location } = req.body;
 
@@ -31,6 +31,8 @@ export const postJoin = async(req, res)=>{
     }
   return res.redirect("/login");
 };
+
+
 export const getLogin = (req, res) => {
     
     return res.render("login",{pageTitle:"Login"});
@@ -101,7 +103,7 @@ export const finishGithubLogin = async(req, res)=>{
         let user = await User.findOne({email: emailObj.email});
         if (!user) {
             user = await User.create({
-                avataUrl:userData.avatar_url,
+                avatarUrl:userData.avatar_url,
                 name: userData.name,
                 username: userData.login,
                 email: emailObj.email,
@@ -120,20 +122,24 @@ export const finishGithubLogin = async(req, res)=>{
       }
       console.log(json);
 }
+
+
+
 export const logout = (req, res)=>{
     req.session.destroy();
     return res.redirect("/");
 }
-export const getEdit = (req, res) => {
-    
- return res.render("edit-profile", {pageTitle:"Edit Profile"})
+
+export const getEdit = (req, res) => {   
+return res.render("edit-profile", {pageTitle:"Edit Profile"})
 };
+
 export const postEdit = async(req, res) => {
     // const i = req.session.user._id;
     // const {name, email, username,location} = req.body;
     const{
         session:{
-            user:{_id, avataUrl},
+            user:{_id, avatarUrl},
         },
        body: {name, email, username, location},
        file
@@ -154,7 +160,7 @@ export const postEdit = async(req, res) => {
     const updateUser = await User.findByIdAndUpdate(
         _id,
         {
-            avataUrl: file ? file.path : avataUrl,
+            avatarUrl: file ? file.path : avatarUrl,
           name,
           email,
           username,
@@ -202,10 +208,16 @@ export const postChangePassword  = async(req, res) =>{
     return res.redirect("/")
 }
 
-
 export const see = async(req, res) =>{ 
     const {id} =req.params;
-    const user = await User.findById(id).populate("videos");
+    const user = await User.findById(id).populate({
+        path: "videos",
+        populate: {
+          path: "owner",
+          model: "User",
+        },
+      }); //doblue populate videos and 누가 만들었는지 보여주기 위해 
+
     if (!user) {
         return res.status(404).render("404", { pageTitle: "User not found." });
       }
