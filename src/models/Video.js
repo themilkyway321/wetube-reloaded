@@ -10,6 +10,7 @@ const videoSchema = new mongoose.Schema({
     // description:String,
     description:{type:String, required:true, trim:true, minLength:20},
     fileUrl: { type: String, required: true },
+    thumbUrl: { type: String, required: true },
     // createdAt:Date,
     createdAt:{type:Date, required:true, default:new Date },
     hashtags:[{type:String, trim:true}],
@@ -17,6 +18,9 @@ const videoSchema = new mongoose.Schema({
         views:{type:Number, default:0, required:true},
         rating:{type:Number, default:0, required:true},
     },
+    comments: [
+        { type: mongoose.Schema.Types.ObjectId, ref: "Comment" },
+      ],
     owner:{type:mongoose.Schema.Types.ObjectId, required:true, ref:"User"},
 });
 

@@ -124,7 +124,7 @@ const handleMouseLeave = () => {
 
 const handleKeydown = (event) => {
     console.log(event);
-    if (event.code === "Space") {
+    if (event.code === "Space" && event.target.id !== "textarea") {
     handlePlayClick();
     event.preventDefault();
     }
