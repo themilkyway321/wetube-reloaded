@@ -23,6 +23,7 @@ const handleSubmit = async(event) => {
   if (text === "") {
     return;
   }
+  //fetch는 response를 return 하는데 console.log(response)해보면 status가 있다. 
   const { status } = await fetch(`/api/videos/${videoId}/comment`,{
     method:"POST",
     headers:{
