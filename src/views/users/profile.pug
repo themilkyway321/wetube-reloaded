@@ -6,7 +6,7 @@ block content
         if !user.avatarUrl
             span.avatarIcon 😀
         else
-            img(src=user.avatarUrl).avatar
+            img(src=user.avatarUrl, crossorigin="anonymous").avatar
         h3=user.name 
     div.video-grid
         each item in user.videos
