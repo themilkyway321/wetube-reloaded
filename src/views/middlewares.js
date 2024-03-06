@@ -18,6 +18,7 @@ const s3ImageUploader = multerS3({
         const newFileName = Date.now() + "-" + file.originalname;
         const fullPath = "images/" + newFileName;
         ab_callback(null, fullPath);
+        console.log(file);
     },
 });
 
