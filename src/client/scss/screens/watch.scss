@@ -32,4 +32,27 @@
     color: black;
     margin-bottom: 10px;
   }
+  .delete__icon{
+    float: right;
+    cursor: pointer;
+  }
+}
+.video__add-comments{
+  .video__comment-form{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    textarea{
+      border-radius: 2px;
+    }
+    button{
+      all: unset;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+      padding: 10px;
+      height: 10px;
+      background-color: white;
+      color: black;
+    }
+  }
 }
